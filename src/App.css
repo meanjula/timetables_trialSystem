@@ -1,38 +1,147 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  z-index: 1;
+  color: rgb(197, 211, 245);
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  height: 100vh;
+  padding-bottom: 1rem;
+}
+.App::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("./Images/alexandr-bormotin-w6KSwwnQyaE-unsplash.jpg")
+    no-repeat fixed center center/cover;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  box-shadow: inset 0 0 0 2000px rgba(2, 46, 92, 0.3);
+}
+h1 {
+  padding: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.textField {
+  color: black;
+  height: 1rem;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.to,
+.from {
+  background-color: rgb(218, 221, 221);
+  margin: 1rem;
+  border-radius: 5px;
+  padding: 5px;
+}
+.text-container {
+  display: flex;
+  justify-content: center;
+}
+.card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px solid white;
+  width: 80vw;
+  height: fit-content;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: rgba(187, 217, 250, 0.6);
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.itenaries {
+  display: flex;
+  flex-direction: row;
+}
+.row-container {
+  display: flex;
+  flex-direction: row;
+}
+.route-container {
+  height: 100px;
+  width: 50vw;
+  border: 1px solid black;
+}
+.walk-distance {
+  width: fit-content;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 1rem;
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #d7e1e4 0,
+    #b3baf0 100%
+  );
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
 }
 
-.App-link {
-  color: #61dafb;
+.itenary-box {
+  margin: 0.5rem 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.icon-box {
+  display: flex;
+}
+
+.icon {
+  margin-right: 2rem;
+}
+.totalTime-box {
+  margin: 1rem 0;
+}
+
+/* CSS */
+.from,
+.to {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #70bdd3 0,
+    #6572d8 100%
+  );
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+input {
+  color: #fff;
 }
