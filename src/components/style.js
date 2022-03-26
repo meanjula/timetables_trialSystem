@@ -1,17 +1,9 @@
-import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-export const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 export const BusIcon = styled(DirectionsBusIcon)(() => ({
   fontSize: 32,

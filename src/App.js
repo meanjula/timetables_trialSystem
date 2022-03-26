@@ -57,39 +57,55 @@ const generateQuery = (from, to) => {
 
 function App() {
   const [valueFrom, setValueFrom] = useState(
-    "Lapinlahdenkatu , Helsinki::60.1675,24.92301"
+    "Herttoniemi, Helsinki::60.194992,25.031411"
   );
   const [valueTo, setValueTo] = useState(
-    "Roihuvuori,Helsinki::60.1999992 25.0666664"
+    "Kamppi H1241, Helsinki::60.169119,24.932058"
   );
   const [dataf, setDataf] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleFrom = (event) => {
-    setValueFrom(event.target.value);
-    getCoordinates(event.target.value);
+    getCoordinatesFrom(event.target.value);
   };
   const handleTo = (event) => {
     event.preventDefault();
-    setValueTo(event.target.value);
-    getCoordinates(event.target.value);
+    getCoordinatesTo(event.target.value);
   };
-  const getCoordinates = (address) => {
+  const getCoordinatesFrom = (address) => {
     fetch(
       `https://api.digitransit.fi/geocoding/v1/search?text=${address}&size=1`
     )
       .then((response) => response.json())
       .then((data) => {
-        const coordinates = data.features[0].geometry.coordinates;
+        const fetcheddata = data.features[0];
+        const coordinates = fetcheddata.geometry.coordinates;
         const stringCoordinates = coordinates.reverse().join();
-        const region = data.features[0].properties.locality;
-        const fullAddress = `${address},${region}::${stringCoordinates}`;
+        const region = fetcheddata.properties.locality;
+        const name = fetcheddata.properties.name;
 
+        const fullAddress = `${name}, ${region}::${stringCoordinates}`;
         setValueFrom(fullAddress);
+      });
+  };
+  const getCoordinatesTo = (address) => {
+    fetch(
+      `https://api.digitransit.fi/geocoding/v1/search?text=${address}&size=1`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const fetcheddata = data.features[0];
+        const coordinates = fetcheddata.geometry.coordinates;
+        const stringCoordinates = coordinates.reverse().join();
+        const region = fetcheddata.properties.locality;
+        const name = fetcheddata.properties.name;
+
+        const fullAddress = `${name}, ${region}::${stringCoordinates}`;
         setValueTo(fullAddress);
       });
   };
   const getData = (from, to) => {
+    console.log(from, to);
     fetch("https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -99,7 +115,6 @@ function App() {
       .then((data) => {
         setDataf(data.data.plan);
         setIsLoading(false);
-        console.log(dataf);
       });
   };
   useEffect(() => {
@@ -119,7 +134,7 @@ function App() {
           <input
             onChange={handleFrom}
             className="from tfield"
-            form={valueFrom}
+            from={valueFrom}
           />
         </label>
         <label>
@@ -132,44 +147,42 @@ function App() {
       {isLoading && <CircularProgress />}
       {!isLoading && (
         <Container className="container">
-          <div>
-            {dataf.itineraries.map((itenary) => (
-              <div key={itenary.duration} className="card">
-                <div className="walk-distance">
-                  <WalkIcon />
-                  <p>{(itenary.walkDistance / 100).toFixed(2)}km</p>
-                </div>
-                <div className="itenaries">
-                  {itenary.legs.map((leg) => (
-                    <div key={leg.lat} className="itenary-box">
-                      <div className="icon-box">
-                        <div className="icon">
-                          {leg.mode === "WALK" ? (
-                            <WalkIcon className="walk-icon" />
-                          ) : leg.mode === "BUS" ? (
-                            <BusIcon />
-                          ) : (
-                            <SubwayIcon />
-                          )}
-                        </div>
-                        <ArrowIcon />
+          {dataf.itineraries.map((itenary) => (
+            <div key={itenary.duration} className="card">
+              <div className="walk-distance">
+                <WalkIcon />
+                <p>{(itenary.walkDistance / 100).toFixed(2)}km</p>
+              </div>
+              <div className="itenaries">
+                {itenary.legs.map((leg) => (
+                  <div key={leg.lat} className="itenary-box">
+                    <div className="icon-box">
+                      <div className="icon">
+                        {leg.mode === "WALK" ? (
+                          <WalkIcon className="walk-icon" />
+                        ) : leg.mode === "BUS" ? (
+                          <BusIcon />
+                        ) : (
+                          <SubwayIcon />
+                        )}
                       </div>
-
-                      <p>
-                        {new Date(leg.startTime).toISOString().slice(11, 16)}-
-                        {new Date(leg.endTime).toISOString().slice(11, 16)}
-                      </p>
-                      <p>Via {leg.from.name}</p>
+                      <ArrowIcon />
                     </div>
-                  ))}
-                  <div className="totalTime-box">
-                    <Alarm />
-                    <p>{itenary.duration / 100} min</p>
+
+                    <p>
+                      {new Date(leg.startTime).toISOString().slice(11, 16)}-
+                      {new Date(leg.endTime).toISOString().slice(11, 16)}
+                    </p>
+                    <p>Via {leg.from.name}</p>
                   </div>
+                ))}
+                <div className="totalTime-box">
+                  <Alarm />
+                  <p>{itenary.duration / 100} min</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </Container>
       )}
     </div>
