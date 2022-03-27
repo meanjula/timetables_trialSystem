@@ -108,7 +108,7 @@ function App() {
   };
   useEffect(() => {
     getData(valueFrom, valueTo);
-  }, []);
+  }, [valueFrom, valueTo]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
