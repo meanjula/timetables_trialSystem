@@ -1,14 +1,10 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { Container } from "@mui/material";
-import { BusIcon } from "./components/style";
-import { SubwayIcon } from "./components/style";
-import { WalkIcon } from "./components/style";
 import { CircularProgress } from "@mui/material";
-import { ArrowIcon } from "./components/style";
-import { Alarm } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import Landing from "./components/Landing";
 
+import Itenary from "./components/Itenary";
 const generateQuery = (from, to) => {
   return `
  {
@@ -56,56 +52,49 @@ const generateQuery = (from, to) => {
 };
 
 function App() {
-  const [valueFrom, setValueFrom] = useState(
-    "Herttoniemi, Helsinki::60.194992,25.031411"
-  );
+  const [valueFrom, setValueFrom] = useState("");
   const [valueTo, setValueTo] = useState(
-    "Kamppi H1241, Helsinki::60.169119,24.932058"
+    "Lapinlahdenkatu 12, Helsinki::60.167247,24.924224"
   );
   const [dataf, setDataf] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selected, setSelected] = useState(false);
 
   const handleFrom = (event) => {
+    event.preventDefault();
     getCoordinatesFrom(event.target.value);
   };
   const handleTo = (event) => {
     event.preventDefault();
     getCoordinatesTo(event.target.value);
   };
-  const getCoordinatesFrom = (address) => {
-    fetch(
-      `https://api.digitransit.fi/geocoding/v1/search?text=${address}&size=1`
-    )
+  const getAddress = (data) => {
+    const fetcheddata = data.features[0];
+    const coordinates = fetcheddata.geometry.coordinates;
+    const stringCoordinates = coordinates.reverse().join();
+    const region = fetcheddata.properties.locality;
+    const name = fetcheddata.properties.name;
+
+    const fullAddress = `${name}, ${region}::${stringCoordinates}`;
+    return fullAddress;
+  };
+  const getCoordinatesFrom = (from) => {
+    fetch(`https://api.digitransit.fi/geocoding/v1/search?text=${from}&size=1`)
       .then((response) => response.json())
       .then((data) => {
-        const fetcheddata = data.features[0];
-        const coordinates = fetcheddata.geometry.coordinates;
-        const stringCoordinates = coordinates.reverse().join();
-        const region = fetcheddata.properties.locality;
-        const name = fetcheddata.properties.name;
-
-        const fullAddress = `${name}, ${region}::${stringCoordinates}`;
-        setValueFrom(fullAddress);
+        const fromFullAddress = getAddress(data);
+        setValueFrom(fromFullAddress);
       });
   };
-  const getCoordinatesTo = (address) => {
-    fetch(
-      `https://api.digitransit.fi/geocoding/v1/search?text=${address}&size=1`
-    )
+  const getCoordinatesTo = (to) => {
+    fetch(`https://api.digitransit.fi/geocoding/v1/search?text=${to}&size=1`)
       .then((response) => response.json())
       .then((data) => {
-        const fetcheddata = data.features[0];
-        const coordinates = fetcheddata.geometry.coordinates;
-        const stringCoordinates = coordinates.reverse().join();
-        const region = fetcheddata.properties.locality;
-        const name = fetcheddata.properties.name;
-
-        const fullAddress = `${name}, ${region}::${stringCoordinates}`;
-        setValueTo(fullAddress);
+        const toFullAddress = getAddress(data);
+        setValueTo(toFullAddress);
       });
   };
   const getData = (from, to) => {
-    console.log(from, to);
     fetch("https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,6 +113,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     getData(valueFrom, valueTo);
+    setSelected(true);
   };
 
   return (
@@ -132,57 +122,42 @@ function App() {
       <div className="text-container">
         <label>
           <input
+            data-testid="inputFrom"
+            type="text"
             onChange={handleFrom}
-            className="from tfield"
+            className="from textfield"
             from={valueFrom}
           />
         </label>
         <label>
-          <input onChange={handleTo} className="to textfield" to={valueTo} />
+          <input
+            data-testid="inputTo"
+            type="text"
+            onChange={handleTo}
+            className="to textfield"
+            to={valueTo}
+            defaultValue="Lapinlahdenkatu 12, Helsinki::60.167247,24.924224"
+          />
         </label>
-        <Button onClick={handleSubmit} className="button">
+        <button data-testid="button" onClick={handleSubmit} className="button">
           submit
-        </Button>
+        </button>
       </div>
       {isLoading && <CircularProgress />}
       {!isLoading && (
-        <Container className="container">
-          {dataf.itineraries.map((itenary) => (
-            <div key={itenary.duration} className="card">
-              <div className="walk-distance">
-                <WalkIcon />
-                <p>{(itenary.walkDistance / 100).toFixed(2)}km</p>
-              </div>
-              <div className="itenaries">
-                {itenary.legs.map((leg) => (
-                  <div key={leg.lat} className="itenary-box">
-                    <div className="icon-box">
-                      <div className="icon">
-                        {leg.mode === "WALK" ? (
-                          <WalkIcon className="walk-icon" />
-                        ) : leg.mode === "BUS" ? (
-                          <BusIcon />
-                        ) : (
-                          <SubwayIcon />
-                        )}
-                      </div>
-                      <ArrowIcon />
-                    </div>
-
-                    <p>
-                      {new Date(leg.startTime).toISOString().slice(11, 16)}-
-                      {new Date(leg.endTime).toISOString().slice(11, 16)}
-                    </p>
-                    <p>Via {leg.from.name}</p>
-                  </div>
-                ))}
-                <div className="totalTime-box">
-                  <Alarm />
-                  <p>{itenary.duration / 100} min</p>
-                </div>
-              </div>
+        <Container data-testid="container">
+          {!selected && <Landing />}
+          {selected && (
+            <div data-testid="result-box">
+              {dataf.itineraries.map((itenary) => (
+                <Itenary
+                  duration={itenary.duration}
+                  walkDistance={itenary.walkDistance}
+                  legs={itenary.legs}
+                />
+              ))}
             </div>
-          ))}
+          )}
         </Container>
       )}
     </div>

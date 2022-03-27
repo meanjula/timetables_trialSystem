@@ -4,6 +4,7 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import { Button } from "@mui/material";
 
 export const BusIcon = styled(DirectionsBusIcon)(() => ({
   fontSize: 32,
@@ -28,3 +29,4 @@ export const ArrowIcon = styled(DoubleArrowIcon)(() => ({
   fontSize: 36,
   color: "rgb(30, 72, 144)",
 }));
+export const submitButton = styled(Button)(() => ({}));
