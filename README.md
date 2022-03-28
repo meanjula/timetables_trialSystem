@@ -124,6 +124,11 @@ Install plgin for eslint and setup configuration to check your code quality.
 npm install -g eslint-plugin-react
 npm init @eslint/config
 ```
+## Further Improvements
+- Defining types in graphql query.
+- Autosuggestion of address during user input.
+- Using google Api and getting users current address.
+- Including more detail information such as bus number, stop name and so on.
 
 ## Resources
 
