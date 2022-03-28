@@ -1,6 +1,6 @@
 import React from "react";
 import { WalkIcon } from "./style";
-import { Alarm } from "@mui/icons-material";
+import { Alarm } from "./style";
 import Leg from "./Leg";
 
 const Itenary = ({ legs, walkDistance, duration }) => {
@@ -8,7 +8,7 @@ const Itenary = ({ legs, walkDistance, duration }) => {
     <div key={duration} className="card">
       <div className="walk-distance">
         <WalkIcon />
-        <p>{(walkDistance / 100).toFixed(2)}km</p>
+        <p>{(walkDistance / 1000).toFixed(2)} km</p>
       </div>
       <div className="itenaries">
         {legs.map((leg) => (
@@ -22,7 +22,7 @@ const Itenary = ({ legs, walkDistance, duration }) => {
         ))}
         <div className="totalTime-box">
           <Alarm data-testid="alarm" />
-          <p>{duration / 100} min</p>
+          <p>{(duration / 60).toFixed(2)} min</p>
         </div>
       </div>
     </div>

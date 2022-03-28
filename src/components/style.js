@@ -2,31 +2,29 @@ import { styled } from "@mui/material/styles";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import { AccessAlarm } from "@mui/icons-material";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { Button } from "@mui/material";
 
 export const BusIcon = styled(DirectionsBusIcon)(() => ({
-  fontSize: 32,
+  fontSize: 36,
   color: "rgb(30, 72, 144)",
 }));
 
 export const WalkIcon = styled(DirectionsWalkIcon)(() => ({
-  fontSize: 36,
+  fontSize: 40,
   color: "black",
 }));
 
 export const SubwayIcon = styled(DirectionsSubwayIcon)(() => ({
-  fontSize: 36,
+  fontSize: 40,
   color: "rgb(223, 130, 43)",
 }));
 
-export const Alarm = styled(AccessAlarmIcon)(() => ({
-  fontSize: 36,
-  color: "rgb(223, 130, 43)",
-}));
-export const ArrowIcon = styled(DoubleArrowIcon)(() => ({
-  fontSize: 36,
+export const Alarm = styled(AccessAlarm)(() => ({
+  fontSize: 40,
   color: "rgb(30, 72, 144)",
 }));
-export const submitButton = styled(Button)(() => ({}));
+export const ArrowIcon = styled(DoubleArrowIcon)(() => ({
+  fontSize: 40,
+  color: "rgb(30, 72, 144)",
+}));

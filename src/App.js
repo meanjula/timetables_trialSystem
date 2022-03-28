@@ -10,7 +10,8 @@ const generateQuery = (from, to) => {
  {
     plan(
       fromPlace: "${from}",
-      toPlace:"${to}" ,  
+      toPlace:"${to}" , 
+      numItineraries: 4 
     ) {
       
       itineraries{
@@ -24,31 +25,18 @@ const generateQuery = (from, to) => {
         lat
         lon
         name
-        stop {
-          code
-          name
-        }
         },
         to {
         lat
         lon
         name
-        },
-        agency {
-        gtfsId
-            name
-        },
-        distance
-        legGeometry {
-        length
-        points
-        }
+        }, 
+        distance 
       }
       }
     }  
   }
-  
-  }`;
+ }`;
 };
 
 function App() {
@@ -108,7 +96,8 @@ function App() {
   };
   useEffect(() => {
     getData(valueFrom, valueTo);
-  }, [valueFrom, valueTo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -118,8 +107,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Timetables</h1>
       <div className="text-container">
+        <h1>Timetables</h1>
         <label>
           <input
             data-testid="inputFrom"
@@ -127,6 +116,7 @@ function App() {
             onChange={handleFrom}
             className="from textfield"
             from={valueFrom}
+            placeholder="From"
           />
         </label>
         <label>

@@ -1,14 +1,6 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  cleanup,
-  debug,
-} from "@testing-library/react";
+import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import App from "./App";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
-import Itenary from "./components/Itenary";
 afterEach(cleanup);
 
 describe("testing rendering", () => {
@@ -53,25 +45,24 @@ describe("submit button", () => {
       target: { value: "kamppi" },
     });
     expect(inputFrom.value).toBe("kamppi");
-  });
 
-  test("triggers request submit button", () => {
-    const getData = jest.fn();
-
-    render(<App getData={getData} />);
-    const inputFrom = screen.getByTestId("inputFrom");
-    fireEvent.change(inputFrom, {
-      target: { value: "kamppi" },
-    });
-    expect(inputFrom.value).toBe("kamppi");
     const inputTo = screen.getByTestId("inputTo");
     fireEvent.change(inputTo, {
       target: { value: "itäkeskus" },
     });
     expect(inputTo.value).toBe("itäkeskus");
-    const submitButton = screen.getByTestId("button");
-    console.log(submitButton);
+  });
+  test("triggers request submit button", () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <button data-testid="button" onClick={handleSubmit} className="button">
+        submit
+      </button>
+    );
+
+    const submitButton = screen.getByText(/submit/i);
     fireEvent.click(submitButton);
-    expect(getData).toHaveBeenCalled();
+    expect(handleSubmit).toHaveBeenCalled();
   });
 });

@@ -18,11 +18,13 @@ const Leg = ({ key, startTime, endTime, mode, viaName }) => {
         </div>
         <ArrowIcon />
       </div>
-      <p>
-        {new Date(startTime).toISOString().slice(11, 16)}-
-        {new Date(endTime).toISOString().slice(11, 16)}
-      </p>
-      <p>Via {viaName}</p>
+      <div className="time">
+        <p>
+          {new Date(startTime).toISOString().slice(11, 16)}-
+          {new Date(endTime).toISOString().slice(11, 16)}
+        </p>
+        <p>Via {viaName}</p>
+      </div>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&family=Roboto+Slab:wght@100;200&family=Roboto:wght@100;300;500&display=swap");
+
 .App {
   text-align: center;
   position: relative;
@@ -6,6 +8,8 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.2rem;
 }
 
 * {
@@ -13,14 +17,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-#container {
-  z-index: 1;
-  color: rgb(197, 211, 245);
-  font-size: 1rem;
-  height: 100vh;
-  padding-bottom: 1rem;
-  width: 100%;
-}
+
 .App::after {
   content: "";
   position: absolute;
@@ -33,22 +30,34 @@
   z-index: -1;
   box-shadow: inset 0 0 0 2000px rgba(2, 46, 92, 0.3);
 }
+#container {
+  z-index: 1;
+  color: rgb(197, 211, 245);
+  font-size: 1rem;
+  height: 100vh;
+  width: 100%;
+}
+.text-container {
+  margin-top: 2rem;
+}
 h1 {
-  padding: 2rem;
-  color: #fff;
+  padding: 2.2rem;
+  color: rgb(255, 255, 255);
+  font-family: "Roboto Slab", serif;
+  font-size: 2.5rem;
+  font-weight: 400;
 }
 .welcome-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 600px;
+  height: 100%;
   width: 100%;
-  font-size: 5rem;
+  font-size: 4rem;
   word-spacing: 0.5rem;
-  font-weight: 500;
+  font-weight: 700;
   color: radial-gradient(100% 100% at 100% 0, #d7e1e4 0, #5b6be3 100%);
   z-index: 1;
+  margin-top: 3rem;
 }
+
 h1,
 .welcome-div p,
 h2 {
@@ -58,8 +67,10 @@ h2 {
   -webkit-text-fill-color: transparent;
 }
 .welcome-div p {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  margin-top: 1rem;
 }
+
 .textField {
   color: black;
   height: 1rem;
@@ -90,6 +101,8 @@ h2 {
 .itenaries {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .route-container {
@@ -112,9 +125,11 @@ h2 {
 }
 
 .itenary-box {
-  margin: 0.5rem 1rem;
+  margin: 1.5rem;
 }
-
+.itenary-box p {
+  font-size: 1.5rem;
+}
 .icon-box {
   display: flex;
 }
@@ -123,10 +138,12 @@ h2 {
   margin-right: 2rem;
 }
 .totalTime-box {
-  margin: 1rem 0;
+  margin: 3rem 0.5rem;
 }
 
-/* CSS */
+.time {
+  margin-left: 0;
+}
 .from,
 .to,
 button {
@@ -164,15 +181,22 @@ button {
   will-change: box-shadow, transform;
   font-size: 18px;
 }
-input {
-  color: #fff;
+::placeholder {
+  color: white;
+  opacity: 1; /* Firefox */
 }
+
+:-ms-input-placeholder,
+::-ms-input-placeholder {
+  color: white;
+}
+
 @media screen and (max-width: 600px) {
   .welcome-div h2 {
     font-size: 4rem;
   }
   .welcome-div p {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
   .welcome-div {
     justify-content: start;
@@ -183,12 +207,16 @@ input {
   button {
     height: 2rem;
   }
+  button {
+    margin: auto;
+    width: 60%;
+  }
   .card {
     margin: 1rem 0.5rem;
-    padding: 0.5rem;
+    padding: 0.2rem;
   }
-  .itenary-box {
-    margin: 0.5rem;
+  .itenary-box p {
+    font-size: 1.2rem;
   }
 }
 
@@ -196,8 +224,17 @@ input {
   .itenary-box {
     margin: 1rem 0.2rem;
   }
+  .text-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  button {
+    margin-top: 1rem;
+  }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .itenaries {
     display: flex;
     flex-direction: column;
@@ -211,7 +248,7 @@ input {
     font-size: 3rem;
   }
   .welcome-div p {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .welcome-div {
