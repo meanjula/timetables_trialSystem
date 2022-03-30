@@ -162,7 +162,7 @@ button {
   color: #fff;
   cursor: pointer;
   display: inline-flex;
-  font-family: "JetBrains Mono", monospace;
+  font-family: monospace;
   height: 2.5rem;
   justify-content: center;
   line-height: 1;
@@ -174,13 +174,11 @@ button {
   text-align: left;
   text-decoration: none;
   transition: box-shadow 0.15s, transform 0.15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow, transform;
   font-size: 18px;
 }
+
 ::placeholder {
   color: white;
   opacity: 1; /* Firefox */
@@ -211,6 +209,7 @@ button {
     margin: auto;
     width: 60%;
   }
+
   .card {
     margin: 1rem 0.5rem;
     padding: 0.2rem;

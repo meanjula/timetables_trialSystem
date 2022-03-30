@@ -117,6 +117,7 @@ function App() {
             className="from textfield"
             from={valueFrom}
             placeholder="From"
+            required
           />
         </label>
         <label>
@@ -127,6 +128,7 @@ function App() {
             className="to textfield"
             to={valueTo}
             defaultValue="Lapinlahdenkatu 12, Helsinki::60.167247,24.924224"
+            required
           />
         </label>
         <button data-testid="button" onClick={handleSubmit} className="button">
