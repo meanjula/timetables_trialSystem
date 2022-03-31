@@ -20,8 +20,8 @@ const Leg = ({ key, startTime, endTime, mode, viaName }) => {
       </div>
       <div className="time">
         <p>
-          {new Date(startTime).toISOString().slice(11, 16)}-
-          {new Date(endTime).toISOString().slice(11, 16)}
+          {new Date(startTime).toLocaleString().slice(11, 17)}
+          {new Date(endTime).toLocaleString().slice(11, 17)}
         </p>
         <p>Via {viaName}</p>
       </div>

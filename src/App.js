@@ -104,7 +104,7 @@ function App() {
     getData(valueFrom, valueTo);
     setSelected(true);
   };
-
+  console.log(dataf);
   return (
     <div className="App">
       <div className="text-container">
